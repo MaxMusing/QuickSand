@@ -1,0 +1,35 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>QuickSand</title>
+	<!-- Stylesheet -->
+	<link href="{% static 'css/stylesheet.css' %}" rel="stylesheet">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet">
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+</head>
+
+<body class="landing-page">
+
+	<main>
+		<h1>QuickSand</h1>
+
+		<form action="/login_request/" method="POST">{% csrf_token %}
+			{% for field in login_form %}
+				{{ field.errors }}
+				{{ field }} {{ field.label_tag }}
+			{% endfor %}
+
+			<button class="button button-rectangle button-form" type="submit" name="_login">Log In</button>
+			<button class="button button-rectangle button-form" type="submit" name="_signup">Sign Up</button>
+		</form>
+	</main>
+
+</body>
+
+</html>

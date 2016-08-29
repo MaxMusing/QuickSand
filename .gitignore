@@ -1,0 +1,9 @@
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+user_data
+media
+static_in_virtualenv

@@ -1,0 +1,50 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>QuickSand</title>
+	<!-- Stylesheet -->
+	<link href="{% static 'css/stylesheet.css' %}" rel="stylesheet">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet">
+	<!-- jQuery -->
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="http://cdn.intercoolerjs.org/intercooler-0.9.7.min.js"></script>
+	<!-- JS -->
+	<script src="{% static 'js/tabbar.js' %}"></script>
+</head>
+
+<body>
+
+	<main>
+		<header>
+			{% spaceless %}
+			<a href="/home/">Back</a>
+			<p>New Meal</p>
+			<a></a>
+			<!-- <a href="/add_meal/">Save</a> -->
+			{% endspaceless %}
+		</header>
+
+		<form action="/add_meal_request/" method="POST">{% csrf_token %}
+			{% for field in meal_form %}
+				{{ field.errors }}
+				{{ field }} {{ field.label_tag }}
+			{% endfor %}
+
+			<button class="button button-rectangle button-form" type="submit">Save</button>
+		</form>
+	</main>
+
+	<footer>
+		<div class="tabbar">
+
+		</div>
+	</footer>
+
+</body>
+
+</html>

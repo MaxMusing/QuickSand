@@ -1,0 +1,154 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>QuickSand</title>
+	<!-- Stylesheet -->
+	<link href="{% static 'css/stylesheet.css' %}" rel="stylesheet">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet">
+	<!-- jQuery -->
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="http://cdn.intercoolerjs.org/intercooler-0.9.7.min.js"></script>
+	<!-- JS -->
+	<script src="{% static 'js/tabbar.js' %}"></script>
+</head>
+
+<body>
+
+	<main>
+		<div class="tab-window">
+			<header>
+				{% spaceless %}
+				<a href="/logout_request/">Log Out</a>
+				<p>Buy</p>
+				<a></a>
+				{% endspaceless %}
+			</header>
+
+			{% spaceless %}
+			{% for meal in meal_buy_list|slice:":16" %}
+				<a href="/{{ meal.id }}/{{ meal.name_url }}/" class="tile-dynamic">
+					<div class="meal-tile" {% if meal.image %} style="background-image: url({{ meal.image.url }})" {% endif %}>
+						<div class="meal-info-wrapper">
+							<h4 class="meal-name">{{ meal.name }}</h4>
+							<h4 class="meal-price">${{ meal.price }}</h4>
+							<p>{{ meal.meetup_location }}</p>
+							<p>{{ meal.meetup_time }}</p>
+							{% if meal.vegetarian %}<img class="icon-tag" src="{% static 'img/Vegetarian.png' %}" />{% endif %}
+							{% if meal.vegan %}<img class="icon-tag" src="{% static 'img/Vegan.png' %}" />{% endif %}
+							{% if meal.gluten_free %}<img class="icon-tag" src="{% static 'img/Gluten Free.png' %}" />{% endif %}
+							{% if meal.lactose_free %}<img class="icon-tag" src="{% static 'img/Lactose Free.png' %}" />{% endif %}
+							{% if meal.nut_free %}<img class="icon-tag" src="{% static 'img/Nut Free.png' %}" />{% endif %}
+						</div>
+					</div>
+				</a>
+			{% empty %}
+				<h4>There are no meals available.</h4>
+			{% endfor %}
+			{% endspaceless %}
+		</div>
+
+		<div class="tab-window">
+			<header>
+				{% spaceless %}
+				<a href="/logout_request/">Log Out</a>
+				<p>Sell</p>
+				<a href="/add_meal/">Add</a>
+				{% endspaceless %}
+			</header>
+
+			{% spaceless %}
+			{% for meal in meal_sell_list %}
+				<div class="tile-dynamic">
+					<div class="meal-tile" {% if meal.image %} style="background-image: url({{ meal.image.url }})" {% endif %}>
+						<div class="meal-info-wrapper">
+							<h4 class="meal-name">{{ meal.name }}</h4>
+							<h4 class="meal-price">${{ meal.price }}</h4>
+							<p>{{ meal.meetup_location }}</p>
+							<p>{{ meal.meetup_time }}</p>
+							{% if meal.vegetarian %}<img class="icon-tag" src="{% static 'img/Vegetarian.png' %}" />{% endif %}
+							{% if meal.vegan %}<img class="icon-tag" src="{% static 'img/Vegan.png' %}" />{% endif %}
+							{% if meal.gluten_free %}<img class="icon-tag" src="{% static 'img/Gluten Free.png' %}" />{% endif %}
+							{% if meal.lactose_free %}<img class="icon-tag" src="{% static 'img/Lactose Free.png' %}" />{% endif %}
+							{% if meal.nut_free %}<img class="icon-tag" src="{% static 'img/Nut Free.png' %}" />{% endif %}
+							{% if meal.buyer != "" %}<p>Purchased by {{ meal.buyer }}</p>{% endif %}
+						</div>
+					</div>
+				</div>
+			{% empty %}
+				<h4>You're not selling any meals.</h4>
+			{% endfor %}
+			{% endspaceless %}
+		</div>
+
+		<div class="tab-window">
+			<header>
+				{% spaceless %}
+				<a href="/logout_request/">Log Out</a>
+				<p>Profile</p>
+				<a></a>
+				<!-- <a href="/home/" type="submit" form="profile_form">Save</a> -->
+				<!-- <input type="submit" form="profile_form" value="Save" /> -->
+				{% endspaceless %}
+			</header>
+
+			<form action="/user_profile_request/" method="POST">{% csrf_token %}
+				{% for field in profile_form %}
+					{{ field.errors }}
+					{{ field }} {{ field.label_tag }}
+				{% endfor %}
+
+				<button class="button button-rectangle button-form" type="submit">Save</button>
+			</form>
+
+			<h3 class="list-title">Current Orders</h3>
+
+			{% spaceless %}
+			{% for meal in current_purchases %}
+				<div class="tile-dynamic">
+					<div class="meal-tile" {% if meal.image %} style="background-image: url({{ meal.image.url }})" {% endif %}>
+						<div class="meal-info-wrapper">
+							<h4 class="meal-name">{{ meal.name }}</h4>
+							<h4 class="meal-price">${{ meal.price }}</h4>
+							<p>{{ meal.meetup_location }}</p>
+							<p>{{ meal.meetup_time }}</p>
+							{% if meal.vegetarian %}<img class="icon-tag" src="{% static 'img/Vegetarian.png' %}" />{% endif %}
+							{% if meal.vegan %}<img class="icon-tag" src="{% static 'img/Vegan.png' %}" />{% endif %}
+							{% if meal.gluten_free %}<img class="icon-tag" src="{% static 'img/Gluten Free.png' %}" />{% endif %}
+							{% if meal.lactose_free %}<img class="icon-tag" src="{% static 'img/Lactose Free.png' %}" />{% endif %}
+							{% if meal.nut_free %}<img class="icon-tag" src="{% static 'img/Nut Free.png' %}" />{% endif %}
+						</div>
+					</div>
+				</div>
+			{% empty %}
+				<h4>You haven't ordered any meals.</h4>
+			{% endfor %}
+			{% endspaceless %}
+
+		</div>
+	</main>
+
+	<footer>
+		<div class="tabbar">
+			<a class="tabbar-button active">
+				<div class="tabbar-icon"></div>
+				Buy
+			</a>
+			<a class="tabbar-button">
+				<div class="tabbar-icon"></div>
+				Sell
+			</a>
+			<a class="tabbar-button">
+				<div class="tabbar-icon"></div>
+				Profile
+			</a>
+		</div>
+	</footer>
+
+</body>
+
+</html>

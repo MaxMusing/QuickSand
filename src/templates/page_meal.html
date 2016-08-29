@@ -1,0 +1,60 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>QuickSand</title>
+	<!-- Stylesheet -->
+	<link href="{% static 'css/stylesheet.css' %}" rel="stylesheet">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet">
+	<!-- jQuery -->
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="http://cdn.intercoolerjs.org/intercooler-0.9.7.min.js"></script>
+	<!-- JS -->
+	<script src="{% static 'js/tabbar.js' %}"></script>
+</head>
+
+<body>
+
+	<main>
+		<header>
+			{% spaceless %}
+			<a href="/home/">Back</a>
+			<p>Order</p>
+			<a></a>
+			{% endspaceless %}
+		</header>
+
+		<div class="meal-image" {% if meal.image %} style="background-image: url({{ meal.image.url }})" {% endif %}></div>
+		<h2 class="meal-name">{{ meal.name }}</h2>
+		<h3>{{ meal.meetup_location }}</h3>
+		<h3>{{ meal.meetup_time }}</h3>
+		{% if meal.vegetarian %}<img class="icon-tag" src="{% static 'img/Vegetarian Dark.png' %}" />{% endif %}
+		{% if meal.vegan %}<img class="icon-tag" src="{% static 'img/Vegan Dark.png' %}" />{% endif %}
+		{% if meal.gluten_free %}<img class="icon-tag" src="{% static 'img/Gluten Free Dark.png' %}" />{% endif %}
+		{% if meal.lactose_free %}<img class="icon-tag" src="{% static 'img/Lactose Free Dark.png' %}" />{% endif %}
+		{% if meal.nut_free %}<img class="icon-tag" src="{% static 'img/Nut Free Dark.png' %}" />{% endif %}
+
+		<br />
+
+		<p class="meal-description">
+			{{ meal.description }}
+		</p>
+
+		<a href="/{{ meal.id }}/{{ meal.name_url }}/request/" class="button button-rectangle button-form">
+			<h4 class="meal-price">Order now for ${{ meal.price }}</h4>
+		</a>
+	</main>
+
+	<footer>
+		<div class="tabbar">
+
+		</div>
+	</footer>
+
+</body>
+
+</html>

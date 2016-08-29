@@ -1,0 +1,443 @@
+$text-primary: rgba(black, 0.87);
+$text-primary-active: rgba(black, 0.54);
+$text-secondary: rgba(white, 0.87);
+$text-secondary-active: rgba(white, 0.54);
+$background: #ffffff;
+$passive: #34495e;
+$active: #007aff;
+$label: #888;
+$bar-background: #f8f8f8;
+$bar-border: #cccccc;
+$input-border: #ccc;
+$input-border-focus: #018EFF;
+$background-dark: #1D2731;
+$button-background: #E22740;
+
+$border-radius: 4px;
+
+$font-stack: Open Sans, sans-serif;
+
+$desktop-breakpoint: 90rem;
+$laptop-breakpoint: 65rem;
+$mobile-breakpoint: 47.5rem;
+$mobilesmall-breakpoint: 25rem;
+
+$desktop-page-width: 75rem;
+$laptop-page-width: 65rem;
+
+$dynamic-tiles-desktop: 3;
+$dynamic-tiles-laptop: 3;
+$dynamic-tiles-tablet: 2;
+$dynamic-tiles-mobile: 1;
+$dynamic-tiles-mobilesmall: 1;
+
+$input-width: 24rem;
+$input-width-mobile: calc(100% - 4rem);
+
+@mixin border-radius($radius: $border-radius) {
+	-webkit-border-radius: $radius;
+	-moz-border-radius: $radius;
+	border-radius: $radius;
+}
+
+@mixin box-sizing($sizing) {
+	box-sizing: $sizing;
+	-moz-box-sizing: $sizing;
+	-webkit-box-sizing: $sizing;
+}
+
+@mixin transform($args...) {
+	-webkit-transform: $args;
+	-moz-transform: $args;
+	-ms-transform: $args;
+	-o-transform: $args;
+	transform: $args;
+}
+
+@mixin box-shadow($args...) {
+	-webkit-box-shadow: $args;
+	-moz-box-shadow: $args;
+	box-shadow: $args;
+}
+
+@mixin truncate($overflow: ellipsis) {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: $overflow;
+}
+
+@mixin breakpoint($point) {
+	@if $point == desktop {
+		@media (min-width: $desktop-breakpoint) {
+			@content;
+		}
+	}
+	@else if $point == laptop {
+		@media (max-width: $desktop-breakpoint) {
+			@content;
+		}
+	}
+	@else if $point == tablet {
+		@media (max-width: $laptop-breakpoint) {
+			@content;
+		}
+	}
+	@else if $point == mobile {
+		@media (max-width: $mobile-breakpoint)  {
+			@content;
+		}
+	}
+	@else if $point == mobilesmall {
+		@media (max-width: $mobilesmall-breakpoint)  {
+			@content;
+		}
+	}
+	@else {
+		@warn "Invalid breakpoint";
+	}
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	@include box-sizing(border-box);
+}
+
+html, body {
+	height: 100%;
+}
+
+body {
+	background: $background;
+	color: $passive;
+	text-align: center;
+	font-family: $font-stack;
+
+	&.landing-page {
+		background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("../img/landing_background.jpg");
+		background-position: center;
+		background-size: cover;
+		background-repeat: no-repeat;
+
+		label {
+			color: white;
+		}
+
+		input {
+			color: white;
+		}
+	}
+}
+
+h1 {
+	color: $text-secondary;
+	font-size: 3.5rem;
+	margin-bottom: 6rem;
+}
+
+a {
+	text-decoration: none;
+}
+
+main {
+	padding: 3rem 0;
+}
+
+.button {
+	padding: 1rem 2.5rem;
+	display: inline-block;
+	font-size: 1.1rem;
+	font-weight: 400;
+	border: none;
+	background: $button-background;
+	color: $text-secondary;
+	cursor: pointer;
+}
+
+.button-rectangle {
+	@include border-radius($border-radius);
+}
+
+.button-form {
+	margin-top: 1.5rem;
+	margin-bottom: 1.5rem;
+	padding: 0.75rem;
+	font-family: $font-stack;
+	width: $input-width;
+
+	@include breakpoint(mobile) {
+		width: $input-width-mobile;
+	}
+}
+
+.icon-tag {
+	height: 2rem;
+	margin: 0.4rem;
+}
+
+header {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 3rem;
+	background: $bar-background;
+	border-bottom: 1px solid $bar-border;
+	z-index: 100;
+
+	& a {
+		display: inline-block;
+		width: 20%;
+		height: 3rem;
+		line-height: 3rem;
+		color: $passive;
+		font-size: 0.9rem;
+		font-weight: 600;
+		vertical-align: top;
+		text-align: left;
+		padding-left: 1rem;
+	}
+
+	& p {
+		display: inline-block;
+		width: 60%;
+		height: 3rem;
+		line-height: 3rem;
+		text-align: center;
+		font-weight: 600;
+		@include truncate();
+	}
+
+	& p+a {
+		text-align: right;
+		padding-left: 0;
+		padding-right: 1rem;
+	}
+}
+
+.tile-dynamic {
+	display: inline-block;
+	height: 16rem;
+
+	@include breakpoint(desktop) {
+		width: calc(100% / #{$dynamic-tiles-desktop});
+	}
+
+	@include breakpoint(laptop) {
+		width: calc(100% / #{$dynamic-tiles-laptop});
+	}
+
+	@include breakpoint(tablet) {
+		width: calc(100% / #{$dynamic-tiles-tablet});
+	}
+
+	@include breakpoint(mobile) {
+		width: calc(100% / #{$dynamic-tiles-mobile});
+	}
+
+	@include breakpoint(mobilesmall) {
+		width: calc(100% / #{$dynamic-tiles-mobilesmall});
+	}
+
+	.meal-tile {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		color: $text-secondary;
+
+		.meal-info-wrapper {
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			padding: 0.5rem 1rem;
+			text-align: left;
+			background: rgba($background-dark, 0.8);
+
+			.meal-name {
+				display: inline-block;
+				width: 80%;
+			}
+
+			.meal-price {
+				display: inline-block;
+				width: 20%;
+				text-align: right;
+			}
+
+			.icon-tag {
+				display: inline-block;
+				height: 1.2rem;
+				margin: 0.1rem 0.3rem;
+			}
+		}
+	}
+}
+
+.meal-image {
+	width: 100%;
+	height: 65vw;
+	margin-bottom: 2rem;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.meal-description {
+	padding: 0 2rem;
+}
+
+.list-title {
+	text-align: left;
+	margin-left: 1rem;
+	margin-top: 4rem;
+	margin-bottom: 1rem;
+}
+
+label,
+input,
+select,
+textarea,
+.button-form {
+	font-family: inherit;
+	font-size: inherit;
+}
+
+label {
+	position: absolute;
+	width: $input-width;
+	color: $label;
+	margin: 0 auto;
+	text-align: left;
+	font-size: 0.9rem;
+	@include transform(translateX(-50%) translateY(-3.5rem));
+
+	@include breakpoint(mobile) {
+		width: $input-width-mobile;
+		@include transform(translateX(calc(-50%)) translateY(-3.5rem));
+	}
+}
+
+input[type="checkbox"] + label {
+	text-align: left;
+	@include transform(translateX(calc(-50%)));
+}
+
+input,
+select,
+textarea {
+	display: block;
+	margin: 0 auto;
+	width: $input-width;
+	margin-top: 2rem;
+	padding-top: 0.25rem;
+	padding-bottom: 0.5rem;
+	vertical-align: middle;
+	background: transparent;
+	border: none;
+	@include box-shadow(0 1px 0 $input-border);
+	@include border-radius(0);
+
+	@include breakpoint(mobile) {
+		width: $input-width-mobile;
+	}
+}
+
+textarea {
+	resize: none;
+	height: 9.5rem;
+
+	& + label {
+		@include transform(translateX(-50%) translateY(-11rem));
+	}
+}
+
+select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+
+option {
+	font-family: $font-stack;
+}
+
+input,
+select,
+button,
+textarea {
+	&:focus {
+		outline: none;
+		@include box-shadow(0 2px 0 $input-border-focus);
+
+		& + label {
+			color: $input-border-focus;
+		}
+	}
+}
+
+footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: 3rem;
+	background: $bar-background;
+	border-top: 1px solid $bar-border;
+
+	.tabbar {
+		display: table;
+		table-layout: fixed;
+		width: 80%;
+		margin-left: 10%;
+
+		.tabbar-button {
+			display: table-cell;
+			padding: 0 0.7rem;
+			text-decoration: none;
+			font-size: 0.7rem;
+			font-weight: 400;
+			color: $passive;
+			cursor: default;
+			height: 1rem;
+			line-height: 1rem;
+
+			.tabbar-icon {
+				display: block;
+				margin: 0 auto;
+				height: 2rem;
+				background-size: contain;
+				background-repeat: no-repeat;
+				background-position: center;
+			}
+
+			&:nth-child(1) .tabbar-icon {
+				background-image: url("../img/Hamburger.png");
+			}
+
+			&:nth-child(1).active .tabbar-icon {
+				background-image: url("../img/Hamburger Filled.png");
+			}
+
+			&:nth-child(2) .tabbar-icon {
+				background-image: url("../img/Waiter.png");
+			}
+
+			&:nth-child(2).active .tabbar-icon {
+				background-image: url("../img/Waiter Filled.png");
+			}
+
+			&:nth-child(3) .tabbar-icon {
+				background-image: url("../img/User.png");
+			}
+
+			&:nth-child(3).active .tabbar-icon {
+				background-image: url("../img/User Filled.png");
+			}
+
+			&.active {
+				color: $active;
+			}
+		}
+	}
+}
