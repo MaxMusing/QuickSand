@@ -5,6 +5,7 @@ from django import forms
 from .models import *
 
 
+
 class SignUpForm(forms.ModelForm):
 	class Meta:
 		model = UserProfile

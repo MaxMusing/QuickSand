@@ -19,7 +19,6 @@ urlpatterns = [
 	url(r'^(?P<meal_id>[0-9]+)/([-\w]+)/request/$', QuickSandA.views.page_meal_request, name='page_meal_request'),
 ]
 
-#Only runs while in development
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

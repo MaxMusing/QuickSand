@@ -4,6 +4,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+#Models
 class UserProfileManager(models.Manager):
 	def createUserProfile(self, user):
 		userProfile = self.create(user=user)
