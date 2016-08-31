@@ -175,6 +175,7 @@ def add_meal_request(request):
 	return redirect('/home/')
 
 
+
 def user_profile_request(request):
 	try:
 		instanceUserProfile = request.user.userprofile
